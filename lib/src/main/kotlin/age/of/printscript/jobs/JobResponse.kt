@@ -21,24 +21,24 @@ sealed interface JobResponse {
     val schemaVersion: Int
 }
 
-data class JobValidationError(
+data class ValidationErrorDto(
     val message: String,
 )
 
-data class JobPosition(
+data class PositionDto(
     val line: Int,
     val charPosition: Int,
 )
 
-data class JobWarning(
+data class LintWarningDto(
     val message: String,
-    val position: JobPosition,
+    val positionDto: PositionDto,
 )
 
 data class ValidateJobResponse(
     override val jobId: String,
     val isValid: Boolean,
-    val errors: List<JobValidationError> = emptyList(),
+    val errors: List<ValidationErrorDto> = emptyList(),
     override val schemaVersion: Int = 1,
 ) : JobResponse
 
@@ -57,7 +57,7 @@ data class TestJobResponse(
 
 data class LintJobResponse(
     override val jobId: String,
-    val warnings: List<JobWarning> = emptyList(),
+    val warnings: List<LintWarningDto> = emptyList(),
     override val schemaVersion: Int = 1,
 ) : JobResponse
 

@@ -104,7 +104,7 @@ class JobSerializationTest {
             ValidateJobResponse(
                 jobId = "job-1",
                 isValid = false,
-                errors = listOf(JobValidationError("Syntax error at line 1")),
+                errors = listOf(ValidationErrorDto("Syntax error at line 1")),
             )
         val invalidJson = JobSerializer.serializeResponse(invalidResponse)
         val deserializedInvalid = JobSerializer.deserializeResponse(invalidJson) as ValidateJobResponse
@@ -149,9 +149,9 @@ class JobSerializationTest {
                 jobId = "job-4",
                 warnings =
                     listOf(
-                        JobWarning(
+                        LintWarningDto(
                             message = "Identifier should be camelCase",
-                            position = JobPosition(line = 2, charPosition = 5),
+                            positionDto = PositionDto(line = 2, charPosition = 5),
                         ),
                     ),
             )

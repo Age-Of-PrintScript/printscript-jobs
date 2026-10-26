@@ -7,3 +7,5 @@ object QueueNames {
     const val PRINTSCRIPT_WORKER_GROUP = "printscript-workers"
     const val SNIPPET_SERVICE_GROUP = "snippet-service-workers"
 }
+
+const val PAYLOAD_FIELD = "payload"
