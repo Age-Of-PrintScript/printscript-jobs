@@ -45,9 +45,8 @@ data class TestJobRequest(
     override val snippetId: String,
     override val snippetUrl: String,
     override val languageVersion: String,
-    val inputs: List<String> = emptyList(),
-    val expectedOutputs: List<String> = emptyList(),
-    override val schemaVersion: Int = 1,
+    val testUrl: String,
+    override val schemaVersion: Int = 2,
 ) : JobRequest
 
 data class LintJobRequest(

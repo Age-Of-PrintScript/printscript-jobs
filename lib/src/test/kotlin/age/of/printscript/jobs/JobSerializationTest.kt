@@ -47,14 +47,17 @@ class JobSerializationTest {
                 snippetId = "snip-3",
                 snippetUrl = "http://storage/snip-3",
                 languageVersion = "1.1",
-                inputs = listOf("in"),
-                expectedOutputs = listOf("out"),
+                testUrl = "http://storage/test-3-snapshot",
             )
         val json = JobSerializer.serializeRequest(request)
         assertTrue(json.contains(""""type":"TEST""""))
+        assertTrue(json.contains(""""testUrl":"http://storage/test-3-snapshot""""))
+        assertFalse(json.contains(""""inputs""""))
+        assertFalse(json.contains(""""expectedOutputs""""))
 
         val deserialized = JobSerializer.deserializeRequest(json) as TestJobRequest
         assertEquals(request, deserialized)
+        assertEquals(2, deserialized.schemaVersion)
     }
 
     @Test
