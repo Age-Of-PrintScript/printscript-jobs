@@ -215,4 +215,23 @@ class JobSerializationTest {
         assertEquals("printscript-workers", QueueNames.PRINTSCRIPT_WORKER_GROUP)
         assertEquals("snippet-service-workers", QueueNames.SNIPPET_SERVICE_GROUP)
     }
+
+    @Test
+    fun `serialize and deserialize traceHeaders in requests and responses`() {
+        val headers = mapOf("traceparent" to "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01")
+        val request =
+            LintJobRequest(
+                jobId = "job-trace-1",
+                snippetId = "snip-trace-1",
+                snippetUrl = "http://storage/snip-trace-1",
+                languageVersion = "1.1",
+                traceHeaders = headers,
+            )
+        val deserializedReq = JobSerializer.deserializeRequest(JobSerializer.serializeRequest(request))
+        assertEquals(headers, deserializedReq.traceHeaders)
+
+        val response = FormatJobResponse(jobId = "job-trace-1", traceHeaders = headers)
+        val deserializedRes = JobSerializer.deserializeResponse(JobSerializer.serializeResponse(response))
+        assertEquals(headers, deserializedRes.traceHeaders)
+    }
 }

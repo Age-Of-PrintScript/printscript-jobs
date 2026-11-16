@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 sealed interface JobResponse {
     val jobId: String
     val schemaVersion: Int
+    val traceHeaders: Map<String, String>
 }
 
 data class ValidationErrorDto(
@@ -40,12 +41,14 @@ data class ValidateJobResponse(
     val isValid: Boolean,
     val errors: List<ValidationErrorDto> = emptyList(),
     override val schemaVersion: Int = 1,
+    override val traceHeaders: Map<String, String> = emptyMap(),
 ) : JobResponse
 
 data class ExecuteJobResponse(
     override val jobId: String,
     val outputs: List<String> = emptyList(),
     override val schemaVersion: Int = 1,
+    override val traceHeaders: Map<String, String> = emptyMap(),
 ) : JobResponse
 
 data class TestJobResponse(
@@ -53,21 +56,25 @@ data class TestJobResponse(
     val success: Boolean,
     val message: String? = null,
     override val schemaVersion: Int = 1,
+    override val traceHeaders: Map<String, String> = emptyMap(),
 ) : JobResponse
 
 data class LintJobResponse(
     override val jobId: String,
     val warnings: List<LintWarningDto> = emptyList(),
     override val schemaVersion: Int = 1,
+    override val traceHeaders: Map<String, String> = emptyMap(),
 ) : JobResponse
 
 data class FormatJobResponse(
     override val jobId: String,
     override val schemaVersion: Int = 1,
+    override val traceHeaders: Map<String, String> = emptyMap(),
 ) : JobResponse
 
 data class SystemErrorJobResponse(
     override val jobId: String,
     val reason: String,
     override val schemaVersion: Int = 1,
+    override val traceHeaders: Map<String, String> = emptyMap(),
 ) : JobResponse

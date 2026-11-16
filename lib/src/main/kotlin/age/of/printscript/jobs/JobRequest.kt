@@ -21,6 +21,7 @@ sealed interface JobRequest {
     val snippetUrl: String
     val languageVersion: String
     val schemaVersion: Int
+    val traceHeaders: Map<String, String>
 }
 
 data class ValidateJobRequest(
@@ -29,6 +30,7 @@ data class ValidateJobRequest(
     override val snippetUrl: String,
     override val languageVersion: String,
     override val schemaVersion: Int = 1,
+    override val traceHeaders: Map<String, String> = emptyMap(),
 ) : JobRequest
 
 data class ExecuteJobRequest(
@@ -38,6 +40,7 @@ data class ExecuteJobRequest(
     override val languageVersion: String,
     val inputs: List<String> = emptyList(),
     override val schemaVersion: Int = 1,
+    override val traceHeaders: Map<String, String> = emptyMap(),
 ) : JobRequest
 
 data class TestJobRequest(
@@ -47,6 +50,7 @@ data class TestJobRequest(
     override val languageVersion: String,
     val testUrl: String,
     override val schemaVersion: Int = 2,
+    override val traceHeaders: Map<String, String> = emptyMap(),
 ) : JobRequest
 
 data class LintJobRequest(
@@ -56,6 +60,7 @@ data class LintJobRequest(
     override val languageVersion: String,
     val rules: Map<String, String?> = emptyMap(),
     override val schemaVersion: Int = 1,
+    override val traceHeaders: Map<String, String> = emptyMap(),
 ) : JobRequest
 
 data class FormatJobRequest(
@@ -65,4 +70,5 @@ data class FormatJobRequest(
     override val languageVersion: String,
     val rules: Map<String, String?> = emptyMap(),
     override val schemaVersion: Int = 1,
+    override val traceHeaders: Map<String, String> = emptyMap(),
 ) : JobRequest
